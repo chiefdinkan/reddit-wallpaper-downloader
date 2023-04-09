@@ -22,7 +22,7 @@ set -e
 
 for (( i=1; i<=COUNT; i++ )); do
     # If the cache file doesn't exist or is older than 2 hours, we create a new one.
-    if [ ! -f "$JSONCACHE" ] || test `find "$JSONCACHE" -mmin +120`; then
+    if [ ! -f "$JSONCACHE" ] || test "$(find "$JSONCACHE" -mmin +120)" ; then
         echo "Fetching new data from Reddit API..."
         curl -H "User-Agent: $USERAGENT" "$APIURL" -s > "$JSONCACHE"
     fi
@@ -79,7 +79,7 @@ for (( i=1; i<=COUNT; i++ )); do
 
     # Update cache file to ensure next iteration gets fresh data, then sleep for a random amount of time to avoid overwhelming Reddit's servers.
     curl -H "User-Agent: $USERAGENT" "$APIURL" -s > "$JSONCACHE"
-    sleep $(shuf -i 1-5 -n 1)
+    sleep "$(shuf -i 1-5 -n 1)"
 
 done
 
