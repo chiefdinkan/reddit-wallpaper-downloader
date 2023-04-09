@@ -1,6 +1,11 @@
 # Reddit Wallpaper Downloader
 
-This is a Bash script that downloads wallpapers from the [r/wallpapers](https://www.reddit.com/r/wallpapers/) subreddit, using the Reddit API. It allows you to download a specified number of wallpapers and saves them to a directory on your computer.
+This script downloads wallpapers from various subreddits on Reddit.com, and saves them in a directory of your choice. The user can choose which subreddit to download the wallpapers from. ```which technically makes this a reddit-random-image-downloader (.❛ᴗ❛.)  ``` ,And how many wallpapers or posts they want to download.
+Dependencies are :
+    - curl: used to make HTTP requests to Reddit's API.
+    - jq: used to parse JSON data returned by Reddit's API.
+
+Install these dependencies if you don't already have them installed.
 
 ## Dependencies
 
