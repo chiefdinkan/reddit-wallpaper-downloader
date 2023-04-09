@@ -18,9 +18,6 @@ read -r COUNT
 # Remove cached response if older than 2 hours.
 find "$(dirname "$JSONCACHE")" -name "$(basename "$JSONCACHE")" -mmin +120 -exec rm {} \; 2>/dev/null
 
-# Remove wallpapers older than 2 days.
-find "$(dirname "$WPATH")" -mtime +2 -exec rm {} \; 2>/dev/null
-
 # Exit on error.
 set -e
 
