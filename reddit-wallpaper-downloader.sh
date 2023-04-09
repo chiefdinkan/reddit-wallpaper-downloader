@@ -5,7 +5,6 @@ JSONCACHE="/tmp/reddit-wallpaper-cache.json"
 
 # Directory where wallpapers are going to be saved.
 WPATH=${WALLPAPER_PATH:-"$HOME/Pictures/reddit-wallpapers"}
-mkdir -p "$WPATH"
 
 # We need to change our user agent so Reddit allows us to get the JSON without errors.
 USERAGENT="Mozilla/5.0 (X11; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0"
@@ -22,8 +21,9 @@ find "$(dirname "$JSONCACHE")" -name "$(basename "$JSONCACHE")" -mmin +120 -exec
 set -e
 
 for (( i=1; i<=COUNT; i++ )); do
-    # If the cache file doesn't exist, we create it.
-    if [ ! -f "$JSONCACHE" ]; then
+    # If the cache file doesn't exist or is older than 2 hours, we create a new one.
+    if [ ! -f "$JSONCACHE" ] || test `find "$JSONCACHE" -mmin +120`; then
+        echo "Fetching new data from Reddit API..."
         curl -H "User-Agent: $USERAGENT" "$APIURL" -s > "$JSONCACHE"
     fi
 
@@ -53,14 +53,14 @@ for (( i=1; i<=COUNT; i++ )); do
         WURI="https://i.redd.it/$WID.jpg"
     # If the item is not gallery, obtain the image URL directly.
     else
-        WURI=$(echo "$WJSON" | jq -r '.url')
+        WURI=$(echo "$WJSON" | jq -r '.url_overridden_by_dest')
     fi
 
     echo "Downloading wallpaper $i of $COUNT: $WURI"
 
     # Get the title of the post and use it as the name of the downloaded wallpaper.
     WTITLE=$(echo "$WJSON" | jq -r '.title')
-    WNAME="$WTITLE.jpg"
+    WNAME=$(echo "$WTITLE" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-zA-Z0-9]/_/g').jpg
 
     # Get the timestamp in a human-readable format (DD-MM-YY).
     TIMESTAMP=$(date +"%d-%m-%y")
@@ -68,8 +68,19 @@ for (( i=1; i<=COUNT; i++ )); do
     # Construct the filename with timestamp and appropriate name.
     FILENAME="${TIMESTAMP}_${WNAME}"
 
+    # Check if the file already exists in the Wallpapers directory. If it does, skip downloading.
+    if [ -f "$WPATH/$FILENAME" ]; then
+        echo "File already exists: $FILENAME"
+        continue
+    fi
+
     # Download the image and save it to the Wallpapers directory with timestamp and appropriate name.
     curl -L "$WURI" -s -o "$WPATH/$FILENAME"
 
-    echo "Wallpaper saved as: $FILENAME"
+    # Update cache file to ensure next iteration gets fresh data, then sleep for a random amount of time to avoid overwhelming Reddit's servers.
+    curl -H "User-Agent: $USERAGENT" "$APIURL" -s > "$JSONCACHE"
+    sleep $(shuf -i 1-5 -n 1)
+
 done
+
+echo "All wallpapers downloaded successfully."
