@@ -22,6 +22,18 @@ This is a Bash script that downloads wallpapers from the [r/wallpapers](https://
 3. If the post is a gallery, it randomly selects an image from the gallery.
 4. The script fetches the image link and saves it as a .jpg file with a filename that includes the date and time the image was downloaded, as well as the title of the post.
 
+## Caveats
+
+This script is designed to download wallpapers from Reddit, but there are a few caveats you should be aware of.
+
+#### Only Gets the 100 Most Recent Wallpapers
+
+The script only retrieves the 100 most recent wallpapers from the API to choose from. This means that if you run the script multiple times without deleting the images it previously downloaded, it may end up re-downloading the same images.
+
+#### Possible Parse Error
+
+In some cases, the script may encounter a parse error due to issues with the cached JSON file in `/tmp/`. To solve this issue, simply delete the JSON file and then re-run the script.
+
 ## License
 
 This script is licensed under the GPL-3.0 License. See the LICENSE file for more information.
