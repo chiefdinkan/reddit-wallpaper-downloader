@@ -9,7 +9,67 @@ WPATH=${WALLPAPER_PATH:-"$HOME/Pictures/reddit-wallpapers"}
 # We need to change our user agent so Reddit allows us to get the JSON without errors.
 USERAGENT="Mozilla/5.0 (X11; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0"
 
-APIURL="https://www.reddit.com/r/wallpapers.json?limit=100"
+#!/bin/bash
+
+# Cache file to save Reddit API response.
+JSONCACHE="/tmp/reddit-wallpaper-cache.json"
+
+# Directory where wallpapers are going to be saved.
+WPATH=${WALLPAPER_PATH:-"$HOME/Pictures/reddit-wallpapers"}
+
+# We need to change our user agent so Reddit allows us to get the JSON without errors.
+USERAGENT="Mozilla/5.0 (X11; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0"
+
+# Subreddit selection
+echo "Which subreddit do you want to download wallpapers from?"
+echo "1. r/wallpapers"
+echo "2. r/wallpaper"
+echo "3. r/wallpaperdump"
+echo "4. r/backgrounds"
+echo "5. r/earthporn"
+echo "6. r/cityporn"
+echo "7. r/cyberpunk"
+echo "8. r/multiwall"
+echo "9. Custom subreddit"
+read -r CHOICE
+
+case "$CHOICE" in
+    1)
+        SUBREDDIT="wallpapers"
+        ;;
+    2)
+        SUBREDDIT="wallpaper"
+        ;;
+    3)
+        SUBREDDIT="wallpaperdump"
+        ;;
+    4)
+        SUBREDDIT="backgrounds"
+        ;;
+    5)
+        SUBREDDIT="earthporn"
+        ;;
+    6)
+        SUBREDDIT="cityporn"
+        ;;
+    7)
+        SUBREDDIT="cyberpunk"
+        ;;
+    8)
+        SUBREDDIT="multiwall"
+        ;;
+    9)
+        echo "Enter custom subreddit:"
+        read -r CUSTOM_SUBREDDIT
+        SUBREDDIT="$CUSTOM_SUBREDDIT"
+        ;;
+    *)
+        echo "Invalid choice. Exiting."
+        exit 1
+        ;;
+esac
+
+APIURL="https://www.reddit.com/r/$SUBREDDIT.json?limit=100"
 
 echo "How many wallpapers do you want to download?"
 read -r COUNT
@@ -83,4 +143,4 @@ for (( i=1; i<=COUNT; i++ )); do
 
 done
 
-echo "All wallpapers downloaded successfully."
+
