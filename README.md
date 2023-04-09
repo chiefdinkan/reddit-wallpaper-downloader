@@ -24,4 +24,4 @@ This is a Bash script that downloads wallpapers from the [r/wallpapers](https://
 
 ## License
 
-This script is licensed under the GPL License. See the LICENSE file for more information.
+This script is licensed under the GPL-3.0 License. See the LICENSE file for more information.
