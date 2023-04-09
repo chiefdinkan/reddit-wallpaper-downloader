@@ -1,12 +1,8 @@
 # Reddit Wallpaper Downloader
 
 This script downloads wallpapers from various subreddits on Reddit.com, and saves them in a directory of your choice. The user can choose which subreddit to download the wallpapers from. ```which technically makes this a reddit-random-image-downloader (.❛ᴗ❛.)  ``` ,And how many wallpapers or posts they want to download.
-Dependencies are :
-    - curl: used to make HTTP requests to Reddit's API.
-    - jq: used to parse JSON data returned by Reddit's API.
 
 Install these dependencies if you don't already have them installed.
-
 ## Dependencies
 
 - curl
