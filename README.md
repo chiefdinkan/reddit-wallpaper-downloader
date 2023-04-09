@@ -1,6 +1,6 @@
 # Reddit Wallpaper Downloader
 
-This script downloads wallpapers from various subreddits on Reddit.com, and saves them in a directory of your choice. The user can choose which subreddit to download the wallpapers from. ```which technically makes this a reddit-random-image-downloader (.❛ᴗ❛.)  ``` ,And how many wallpapers or posts they want to download.
+This script downloads wallpapers from various subreddits on Reddit.com, and saves them in a directory of your choice. The user can choose which subreddit to download the wallpapers from or enter a custom subreddit of choice. ```which technically makes this a reddit-random-image-downloader (.❛ᴗ❛.)  ``` ,And how many wallpapers or posts they want to download.
 
 Install these dependencies if you don't already have them installed.
 ## Dependencies
@@ -18,7 +18,7 @@ Install these dependencies if you don't already have them installed.
 
 ## How it works
 
-1. The script sends a request to the Reddit API to get the JSON data for the latest posts in the r/wallpapers subreddit, limited to 100 posts at a time.
+1. The script sends a request to the Reddit API to get the JSON data for the latest posts in the selected subreddit , limited to 100 posts at a time.
 2. The script then randomly picks a post from the returned JSON data that has an image link hosted on i.redd.it, reddit.com, or i.imgur.com.
 3. If the post is a gallery, it randomly selects an image from the gallery.
 4. The script fetches the image link and saves it as a .jpg file with a filename that includes the date and time the image was downloaded, as well as the title of the post.
