@@ -135,11 +135,6 @@ for (( i=1; i<=COUNT; i++ )); do
 
     # Download the image and save it to the Wallpapers directory with timestamp and appropriate name.
     curl -L "$WURI" -s -o "$WPATH/$FILENAME"
-
-    # Update cache file to ensure next iteration gets fresh data, then sleep for a random amount of time to avoid overwhelming Reddit's servers.
-    curl -H "User-Agent: $USERAGENT" "$APIURL" -s > "$JSONCACHE"
-    sleep "$(shuf -i 1-5 -n 1)"
-
 done
 
 
